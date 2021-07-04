@@ -5,9 +5,6 @@ import {
 	withStyles,
 	Theme,
 } from "@material-ui/core/styles";
-import CircularProgress, {
-	CircularProgressProps,
-} from "@material-ui/core/CircularProgress";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
@@ -20,6 +17,7 @@ import AddIcon from "@material-ui/icons/Add";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
+import CreateTask from "./CreateTask"
 import { db } from "./db";
 import { ITaskItem } from "./ITaskItem";
 import { IBrochure } from "./IBrochures";
@@ -169,6 +167,7 @@ const App = () => {
 			>
 				<AddIcon />
 			</Fab>
+			<CreateTask />
 		</>
 	);
 };
