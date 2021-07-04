@@ -9,6 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import BurstModeIcon from "@material-ui/icons/BurstMode";
@@ -19,6 +20,33 @@ import WbSunnyTwoToneIcon from "@material-ui/icons/WbSunnyTwoTone";
 import Paper from "@material-ui/core/Paper";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
+
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			width: "100%",
+			// backgroundColor: theme.palette.background.paper,
+		},
+		nested: {
+			paddingLeft: theme.spacing(4),
+		},
+		appItem:{
+			height: "90px",
+		},
+		[theme.breakpoints.up("sm")]: {
+			appItem: {
+				height: "100px",
+			},
+		},
+		appItemIcon: {
+			// height: "50px",
+		},
+		appItemText: {
+			paddingLeft: "20px",
+			fontWeight: 700,
+		}
+	})
+);
 
 // TODO schema info check https://schema.org
 const AppListItem = ({
@@ -42,61 +70,39 @@ const AppListItem = ({
 	const attr =
 		channel === 5
 			? {
-				href: link,
-				target: "_blank",
-				component: "a",
-				rel: "noopener noreferrer",
-			}
+					href: link,
+					target: "_blank",
+					component: "a",
+					rel: "noopener noreferrer",
+			  }
 			: {
-				component: Link,
-				to: "/app/" + link,
-			};
+					component: Link,
+					to: "/app/" + link,
+			  };
 	return (
-		<ListItem
+		<Card>
+			<ListItem
 			className={classes.appItem}
-			selected={selected}
-			button
-			key={name}
-			{...attr}
-		>
-			<ListItemAvatar className={classes.appItemIcon}>
-				<Avatar alt={name} src={icon} />
-			</ListItemAvatar>
-			<ListItemText
-				className={classes.appItemText}
-				inset
-				primary={name}
-				secondary={description}
-			/>
-		</ListItem>
+				selected={selected}
+				button
+				key={name}
+				{...attr}
+			>
+				<ListItemAvatar className={classes.appItemIcon}>
+					<Avatar imgProps={{
+						loading: "lazy"
+					}} variant="rounded" alt={name} src={icon} />
+				</ListItemAvatar>
+				<ListItemText
+					className={classes.appItemText}
+					inset
+					primary={name}
+					secondary={description}
+				/>
+			</ListItem>
+		</Card>
 	);
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			width: "100%",
-			// backgroundColor: theme.palette.background.paper,
-		},
-		nested: {
-			paddingLeft: theme.spacing(4),
-		},
-		[theme.breakpoints.up("sm")]: {
-			appItem: {
-				height: "100px",
-			},
-		},
-		appItemIcon: {
-			height: "50px",
-		},
-		appItemText: {
-			paddingLeft: "20px",
-		},
-		appItem: {
-			boxShadow: ""
-		}
-	})
-);
 
 //分类栏目
 const MakeChannels = ({
@@ -120,7 +126,7 @@ const MakeChannels = ({
 			</ListItem>
 			{/* <Collapse in={open} timeout="auto" unmountOnExit> */}
 			<List component="div" disablePadding>
-				<Grid container spacing={3}>
+				<Grid container spacing={1}>
 					{apps.map((app: any) => (
 						<Grid key={app.name} item sm={6} xl={4} xs={12}>
 							<AppListItem {...app} />
@@ -135,7 +141,7 @@ const MakeChannels = ({
 
 const getChannelName = (index: any) =>
 	["AI人工智能", "图片视频", "编程开发", "生活常用", "第三方工具&友情链接"][
-	index - 1
+		index - 1
 	];
 
 const getChannelIcon = (index: any) => {
@@ -175,7 +181,7 @@ const AppList = () => {
 			subheader={
 				<ListSubheader component="div" id="nested-list-subheader">
 					所有工具
-					</ListSubheader>
+				</ListSubheader>
 			}
 			className={classes.root}
 		>
