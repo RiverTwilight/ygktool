@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
 	makeStyles,
 	createStyles,
@@ -6,40 +6,16 @@ import {
 	Theme,
 } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import Card from "@material-ui/core/Card";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
 import TaskLists from "./TaskLists";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
-import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
-import CreateTask from "./CreateTask"
+import CreateTask from "./CreateTask";
+import RewardBoard from "./RewardBoard";
 import { db } from "./db";
 import { ITaskItem } from "./ITaskItem";
 import { IBrochure } from "./IBrochures";
 
 const DEFAULT_TITLE = "无标题";
-
-const BorderLinearProgress = withStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			height: 10,
-			borderRadius: 5,
-		},
-		colorPrimary: {
-			backgroundColor:
-				theme.palette.grey[theme.palette.type === "light" ? 200 : 700],
-		},
-		bar: {
-			borderRadius: 5,
-			backgroundColor: theme.palette.primary.light,
-		},
-	})
-)(LinearProgress);
 
 // Inspired by the former Facebook spinners.
 const useStyles = makeStyles((theme: Theme) =>
@@ -58,64 +34,6 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 	})
 );
-
-const RewardBoard = ({
-	brochures,
-	totalPoints = 120,
-}: {
-	totalPoints: number;
-	brochures: IBrochure[];
-}) => {
-	const classes = useStyles();
-	const [nextReward, setNextReward] = useState<string>("");
-	const [nextRewardPoint, setNextRewardPoint] = useState<number | string>(0)
-	// 后续增加手册切换功能
-	const currentBrochure: IBrochure = {
-		50: {
-			reward: "asfd",
-		},
-		100: {
-			reward: "asdff",
-		},
-		200: {
-			reward: "dgs",
-		},
-	};
-	const pointSets = Object.keys(currentBrochure);
-
-	useEffect(() => {
-		for (let i in pointSets) {
-		let index: number = parseInt(i);
-		if (
-			totalPoints >= parseInt(pointSets[index]) &&
-			totalPoints < parseInt(pointSets[index + 1])
-		) {
-			setNextReward(currentBrochure[pointSets[index + 1]].reward);
-			setNextRewardPoint(pointSets[index + 1]);
-			return
-		}
-	}	
-	}, [totalPoints])
-
-	return (
-		<>
-			<Card className={classes.padding} component={Paper}>
-				<Typography variant="h5">
-					<CardGiftcardIcon />
-					{nextReward}
-				</Typography>
-				<Typography variant="caption">{`${totalPoints}/${nextRewardPoint}`}</Typography>
-				<br />
-				<BorderLinearProgress variant="determinate" value={50} />
-				<br />
-				<div className={classes.actions}>
-					<Button startIcon={<KeyboardArrowLeftIcon />}></Button>
-					<Button endIcon={<NavigateNextIcon />}>上一个</Button>
-				</div>
-			</Card>
-		</>
-	);
-};
 
 // TODO 积分手册工具https://github.com/dfahlander/Dexie.js/tree/master/samples/react/src
 const App = () => {
@@ -155,7 +73,7 @@ const App = () => {
 
 	return (
 		<>
-			<RewardBoard totalPoints={sum} brochures={rewards} />
+			<RewardBoard totalPoints={sum} />
 			<br />
 			<TaskLists tasks={tasks} />
 			<Fab
