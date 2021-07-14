@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ClipboardJS from "clipboard";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";

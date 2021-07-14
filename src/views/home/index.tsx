@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import AppList from "./AppList";
 import Search from "./Search";
 import FivList from "./FivList";
+import Board from "./Board";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
@@ -93,7 +94,10 @@ export default function Index(props: any) {
 	}, [props]);
 	return (
 		<div className={classes.root}>
-			<Grid container spacing={1}>
+			<Grid container direction="row-reverse" spacing={1}>
+				<Grid item xs={12} sm={3}>
+					<Board />
+				</Grid>
 				<Grid item sm={9} xs={12}>
 					<Search />
 					<br />
@@ -101,9 +105,6 @@ export default function Index(props: any) {
 					<br />
 					<AppList />
 				</Grid>
-				{/* <Grid item sm={3}>
-					fdsf
-				</Grid> */}
 			</Grid>
 		</div>
 	);
